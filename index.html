@@ -15,6 +15,21 @@
             font-family: Arial, sans-serif;
         }
 
+        #password-container {
+            text-align: center;
+        }
+
+        #password-input {
+            padding: 10px;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        #submit-button {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+
         #wheel-container {
             position: relative;
             width: 300px;
@@ -32,13 +47,11 @@
                 #e53935 100%
             );
             cursor: pointer;
+            display: none; /* 預設隱藏轉盤 */
         }
 
-        #wheel-indicator {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 10px;
+        #stick {
+            width: 4px;
             height: 100px;
             background-color: #fff;
             transform-origin: 50% 100%;
@@ -46,8 +59,13 @@
     </style>
 </head>
 <body>
+    <div id="password-container">
+        <input type="password" id="password-input" placeholder="請輸入密碼">
+        <button id="submit-button" onclick="checkPassword()">確定</button>
+    </div>
+
     <div id="wheel-container" onclick="startLottery()">
-        <div id="wheel-indicator"></div>
+        <div id="stick"></div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
@@ -55,11 +73,29 @@
         const prizes = ['紅', '橙', '黃', '綠', '藍', '靛', '紫'];
         let isSpinning = false;
 
+        function checkPassword() {
+            const passwordInput = document.getElementById('password-input');
+            const password = passwordInput.value.trim();
+
+            if (password === 'devcat') {
+                passwordInput.value = ''; // 清空輸入欄位
+                document.getElementById('password-container').style.display = 'none'; // 隱藏密碼輸入區域
+                document.getElementById('wheel-container').style.display = 'block'; // 顯示轉盤區域
+            } else {
+                Swal.fire({
+                    title: '密碼錯誤',
+                    text: '請輸入正確的密碼',
+                    icon: 'error',
+                    confirmButtonText: '確定'
+                });
+            }
+        }
+
         function startLottery() {
             if (isSpinning) return;
 
             isSpinning = true;
-            const wheel = document.getElementById('wheel-indicator');
+            const wheel = document.getElementById('stick');
             let deg = 3600 + Math.floor(Math.random() * 360); // 旋轉至少10圈再加上0-359度隨機角度
 
             wheel.style.transition = 'transform 4s ease-out';
