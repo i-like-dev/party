@@ -11,40 +11,72 @@
             align-items: center;
             height: 100vh;
             margin: 0;
+            background-color: #f8f8f8;
+            font-family: Arial, sans-serif;
         }
 
-        #wheel {
+        #wheel-container {
             position: relative;
             width: 300px;
             height: 300px;
             border-radius: 50%;
             background: conic-gradient(
                 from 0deg,
-                red 0%,
-                orange 14.28%,
-                yellow 28.57%,
-                green 42.86%,
-                blue 57.14%,
-                indigo 71.43%,
-                purple 85.71%,
-                red 100%
+                #e53935 0%,
+                #fb8c00 14.28%,
+                #ffc107 28.57%,
+                #4caf50 42.86%,
+                #2196f3 57.14%,
+                #3f51b5 71.43%,
+                #9c27b0 85.71%,
+                #e53935 100%
             );
-            animation: spin 4s linear infinite;
             cursor: pointer;
         }
 
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
+        #wheel-indicator {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 10px;
+            height: 100px;
+            background-color: #fff;
+            transform-origin: 50% 100%;
+        }
+
+        #popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            display: none;
+        }
+
+        #popup-content {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        #popup-close {
+            cursor: pointer;
+            color: #888;
         }
     </style>
 </head>
 <body>
-    <div id="wheel" onclick="startLottery()"></div>
+    <div id="wheel-container" onclick="startLottery()">
+        <div id="wheel-indicator"></div>
+    </div>
+
+    <div id="popup">
+        <div id="popup-content"></div>
+        <div id="popup-close" onclick="closePopup()">✓</div>
+    </div>
 
     <script>
         const prizes = ['紅', '橙', '黃', '綠', '藍', '靛', '紫'];
@@ -54,7 +86,7 @@
             if (isSpinning) return;
 
             isSpinning = true;
-            const wheel = document.getElementById('wheel');
+            const wheel = document.getElementById('wheel-indicator');
             let deg = 3600 + Math.floor(Math.random() * 360); // 旋轉至少10圈再加上0-359度隨機角度
 
             wheel.style.transition = 'transform 4s ease-out';
@@ -62,9 +94,21 @@
 
             setTimeout(() => {
                 const result = Math.floor(deg / 60) % prizes.length;
-                alert(`恭喜你抽到了：${prizes[result]}！`);
+                showPopup(`恭喜你抽到了：${prizes[result]}！`);
                 isSpinning = false;
             }, 4000);
+        }
+
+        function showPopup(message) {
+            const popup = document.getElementById('popup');
+            const popupContent = document.getElementById('popup-content');
+            popupContent.textContent = message;
+            popup.style.display = 'block';
+        }
+
+        function closePopup() {
+            const popup = document.getElementById('popup');
+            popup.style.display = 'none';
         }
 
         document.body.onkeyup = function (e) {
