@@ -35,19 +35,10 @@
             width: 300px;
             height: 300px;
             border-radius: 50%;
-            background: conic-gradient(
-                from 0deg,
-                #e53935 0%,
-                #fb8c00 14.28%,
-                #ffc107 28.57%,
-                #4caf50 42.86%,
-                #2196f3 57.14%,
-                #3f51b5 71.43%,
-                #9c27b0 85.71%,
-                #e53935 100%
-            );
+            background: #fff;
             cursor: pointer;
             display: none; /* 預設隱藏轉盤 */
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         #stick {
@@ -56,9 +47,9 @@
             left: 50%;
             width: 4px;
             height: 100px;
-            background-color: #fff;
+            background-color: #ff5252; /* 箭頭顏色為紅色 */
             transform-origin: 50% 100%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%) rotate(-60deg); /* 旋轉箭頭使其垂直 */
         }
 
         .prize {
@@ -68,16 +59,15 @@
             transform: translate(-50%, -50%) rotate(-60deg); /* 旋轉使文字垂直顯示 */
             font-size: 24px;
             font-weight: bold;
-            color: #fff; /* 將文字顏色設為白色 */
         }
 
-        .prize:nth-child(1) { color: #e53935; } /* 獎品1使用紅色 */
-        .prize:nth-child(2) { color: #fb8c00; } /* 獎品2使用橙色 */
-        .prize:nth-child(3) { color: #ffc107; } /* 獎品3使用黃色 */
-        .prize:nth-child(4) { color: #4caf50; } /* 獎品4使用綠色 */
-        .prize:nth-child(5) { color: #2196f3; } /* 獎品5使用藍色 */
-        .prize:nth-child(6) { color: #3f51b5; } /* 獎品6使用靛色 */
-        .prize:nth-child(7) { color: #9c27b0; } /* 獎品7使用紫色 */
+        .prize:nth-child(1) { color: #ff0000; } /* 獎品1使用紅色 */
+        .prize:nth-child(2) { color: #ff7f00; } /* 獎品2使用橙色 */
+        .prize:nth-child(3) { color: #ffff00; } /* 獎品3使用黃色 */
+        .prize:nth-child(4) { color: #00ff00; } /* 獎品4使用綠色 */
+        .prize:nth-child(5) { color: #0000ff; } /* 獎品5使用藍色 */
+        .prize:nth-child(6) { color: #4b0082; } /* 獎品6使用靛色 */
+        .prize:nth-child(7) { color: #9400d3; } /* 獎品7使用紫色 */
     </style>
 </head>
 <body>
@@ -88,13 +78,13 @@
 
     <div id="wheel-container" onclick="startLottery()">
         <div id="stick"></div>
-        <div class="prize" style="color: #e53935;">紅</div>
-        <div class="prize" style="color: #fb8c00;">橙</div>
-        <div class="prize" style="color: #ffc107;">黃</div>
-        <div class="prize" style="color: #4caf50;">綠</div>
-        <div class="prize" style="color: #2196f3;">藍</div>
-        <div class="prize" style="color: #3f51b5;">靛</div>
-        <div class="prize" style="color: #9c27b0;">紫</div>
+        <div class="prize">紅</div>
+        <div class="prize">橙</div>
+        <div class="prize">黃</div>
+        <div class="prize">綠</div>
+        <div class="prize">藍</div>
+        <div class="prize">靛</div>
+        <div class="prize">紫</div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
