@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>抽獎轉盤</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #wheel {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: conic-gradient(
+                from 0deg,
+                red 0%,
+                orange 14.28%,
+                yellow 28.57%,
+                green 42.86%,
+                blue 57.14%,
+                indigo 71.43%,
+                purple 85.71%,
+                red 100%
+            );
+            animation: spin 4s linear infinite;
+            cursor: pointer;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="wheel" onclick="startLottery()"></div>
+
+    <script>
+        const prizes = ['紅', '橙', '黃', '綠', '藍', '靛', '紫'];
+        let isSpinning = false;
+
+        function startLottery() {
+            if (isSpinning) return;
+
+            isSpinning = true;
+            const wheel = document.getElementById('wheel');
+            let deg = 3600 + Math.floor(Math.random() * 360); // 旋轉至少10圈再加上0-359度隨機角度
+
+            wheel.style.transition = 'transform 4s ease-out';
+            wheel.style.transform = `rotate(${deg}deg)`;
+
+            setTimeout(() => {
+                const result = Math.floor(deg / 60) % prizes.length;
+                alert(`恭喜你抽到了：${prizes[result]}！`);
+                isSpinning = false;
+            }, 4000);
+        }
+
+        document.body.onkeyup = function (e) {
+            if (e.keyCode == 32) { // 按下空白鍵的KeyCode是32
+                startLottery();
+            }
+        };
+    </script>
+</body>
+</html>
