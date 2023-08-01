@@ -17,6 +17,10 @@
 
         #login-container {
             text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         #password-input {
@@ -35,7 +39,17 @@
             width: 300px;
             height: 300px;
             border-radius: 50%;
-            background: #fff;
+            background: conic-gradient(
+                from 0deg,
+                #e53935 0%,
+                #fb8c00 14.28%,
+                #ffc107 28.57%,
+                #4caf50 42.86%,
+                #2196f3 57.14%,
+                #3f51b5 71.43%,
+                #9c27b0 85.71%,
+                #e53935 100%
+            );
             cursor: pointer;
             display: none; /* 預設隱藏轉盤 */
             box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
@@ -47,7 +61,7 @@
             left: 50%;
             width: 4px;
             height: 100px;
-            background-color: #ff5252; /* 箭頭顏色為紅色 */
+            background-color: #fff;
             transform-origin: 50% 100%;
             transform: translate(-50%, -50%) rotate(-60deg); /* 旋轉箭頭使其垂直 */
         }
@@ -56,57 +70,53 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%) rotate(-60deg); /* 旋轉使文字垂直顯示 */
+            transform: translate(-50%, -50%) rotate(-60deg); /* 旋轉使文字垂直 */
             font-size: 24px;
             font-weight: bold;
+            color: #fff;
         }
 
-        .prize:nth-child(1) { color: #ff0000; } /* 獎品1使用紅色 */
-        .prize:nth-child(2) { color: #ff7f00; } /* 獎品2使用橙色 */
-        .prize:nth-child(3) { color: #ffff00; } /* 獎品3使用黃色 */
-        .prize:nth-child(4) { color: #00ff00; } /* 獎品4使用綠色 */
-        .prize:nth-child(5) { color: #0000ff; } /* 獎品5使用藍色 */
-        .prize:nth-child(6) { color: #4b0082; } /* 獎品6使用靛色 */
-        .prize:nth-child(7) { color: #9400d3; } /* 獎品7使用紫色 */
+        .prize:nth-child(1) { color: #e53935; } /* 獎品1使用紅色 */
+        .prize:nth-child(2) { color: #fb8c00; } /* 獎品2使用橙色 */
+        .prize:nth-child(3) { color: #ffc107; } /* 獎品3使用黃色 */
+        .prize:nth-child(4) { color: #4caf50; } /* 獎品4使用綠色 */
+        .prize:nth-child(5) { color: #2196f3; } /* 獎品5使用藍色 */
+        .prize:nth-child(6) { color: #3f51b5; } /* 獎品6使用靛色 */
+        .prize:nth-child(7) { color: #9c27b0; } /* 獎品7使用紫色 */
     </style>
 </head>
 <body>
     <div id="login-container">
-        <input type="password" id="password-input" placeholder="請輸入密碼">
-        <button id="submit-button" onclick="checkPassword()">確定</button>
+        <h2>請輸入授權碼</h2>
+        <input type="password" id="password-input" placeholder="授權碼">
+        <button id="submit-button" onclick="checkAuthorization()">確定</button>
     </div>
 
     <div id="wheel-container" onclick="startLottery()">
         <div id="stick"></div>
-        <div class="prize">紅</div>
-        <div class="prize">橙</div>
-        <div class="prize">黃</div>
-        <div class="prize">綠</div>
-        <div class="prize">藍</div>
-        <div class="prize">靛</div>
-        <div class="prize">紫</div>
+        <div class="prize">獎品1</div>
+        <div class="prize">獎品2</div>
+        <div class="prize">獎品3</div>
+        <div class="prize">獎品4</div>
+        <div class="prize">獎品5</div>
+        <div class="prize">獎品6</div>
+        <div class="prize">獎品7</div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
     <script>
-        const prizes = ['紅', '橙', '黃', '綠', '藍', '靛', '紫'];
+        const prizes = ['獎品1', '獎品2', '獎品3', '獎品4', '獎品5', '獎品6', '獎品7'];
         let isSpinning = false;
 
-        function checkPassword() {
+        function checkAuthorization() {
             const passwordInput = document.getElementById('password-input');
-            const password = passwordInput.value.trim();
+            const authorizationCode = passwordInput.value.trim();
 
-            if (password === 'devcat') {
+            if (authorizationCode === '503') {
                 passwordInput.value = ''; // 清空輸入欄位
                 document.getElementById('login-container').style.display = 'none'; // 隱藏登入區域
                 document.getElementById('wheel-container').style.display = 'block'; // 顯示轉盤區域
             } else {
-                Swal.fire({
-                    title: '密碼錯誤',
-                    text: '請輸入正確的密碼',
-                    icon: 'error',
-                    confirmButtonText: '確定'
-                });
+                alert('授權碼錯誤，請輸入正確的授權碼');
             }
         }
 
@@ -129,12 +139,7 @@
         }
 
         function showPopup(message) {
-            Swal.fire({
-                title: '抽獎結果',
-                text: message,
-                icon: 'success',
-                confirmButtonText: '確定'
-            });
+            alert(message);
         }
 
         document.body.onkeyup = function (e) {
